@@ -42,6 +42,14 @@
       align-items: center;
       margin: 10px 0;
     }
+	
+	.intro-text {
+	  font-size: 16px;
+      color: #ccc;
+      margin: 5px 0 10px 0;
+      text-align: center;
+	  font-weight: bold;
+    }
 
     h1 {
       color: yellow;
@@ -99,14 +107,17 @@
     <img class="gif" src="img/sinistra2.gif" alt="Gif 2">
   </div>
 
+  <!-- Testo piccolo introduttivo -->
+  <p class="intro-text">> Clicca sulle GIF per più regali! <</p>
+
   <!-- Contenuto centrale -->
-  <div class="content"> 
-    <h1>!!!!! BUON COMPLEANNO, MATT0CS !!!1! </h1>
+  <div class="content">
+    <h1>COMPLIMENTI!!! HAI VINTOOOOO!!!1!</h1>
     <h2>Sei stato scelto per ricevere un meraviglioso regalo!!!</h2>
     <p>Un LANCIAGRANATE M23-A1 CON 6 GRANATE FLSH IN OMAGGIO! WOW!!!</p>
     <img id="slideshow" src="img/1.jpg" alt="Slideshow">
     
-    <button id="youtubeBtn">>>> CLICCA QUI (per ottenerlo ANCHE SU CONSOLE!!) <<<</button>
+    <button id="youtubeBtn">>>> CLICCA QUI (per riceverlo in game GRATIS!!) <<<</button>
   </div>
 
   <!-- GIF sotto il contenuto -->
@@ -116,18 +127,18 @@
   </div>
 
   <!-- AUDIO DI SOTTOFONDO -->
-  <audio id="bg-music" autoplay loop hidden>
+  <audio id="bg-music" autoplay loop muted hidden>
     <source src="audio/audio.mp3" type="audio/mpeg">
   </audio>
 
   <script>
-    // Funzione per aprire YouTube e chiudere la finestra
+    // Bottone YouTube: apre nuova scheda e prova a chiudere pagina corrente
     document.getElementById("youtubeBtn").addEventListener("click", function() {
       window.open('https://www.youtube.com/shorts/81tfwxgnNCY', '_blank');
       window.close(); // funziona solo se la pagina è stata aperta via JS
     });
 
-    // Slideshow
+    // Slideshow immagini
     const immagini = ["img/1.jpg","img/2.jpg","img/3.jpg","img/4.jpg","img/5.jpg","img/6.jpg"];
     let indice = 0;
     function cambiaImmagine() {
@@ -136,13 +147,16 @@
     }
     setInterval(cambiaImmagine, 500);
 
-    // Autoplay musica
+    // Autoplay musica su tutti i browser
     window.addEventListener("load", function() {
       const audio = document.getElementById("bg-music");
-      audio.volume = 0.4;
+      audio.volume = 0.3;
+      audio.muted = false; // sblocca audio
       const playPromise = audio.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
+          // se bloccato, parte al primo touch/click
+          document.addEventListener("touchstart", () => audio.play(), { once: true });
           document.addEventListener("click", () => audio.play(), { once: true });
         });
       }
