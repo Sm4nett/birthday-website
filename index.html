@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COMPLIMENTI!!1!</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: red;
+      animation: bgChange 0.2s infinite alternate;
+    }
+
+    @keyframes bgChange {
+      from { background-color: red; }
+      to   { background-color: black; }
+    }
+
+    .gif-row {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0;
+      gap: 30px;
+    }
+
+    .gif {
+      width: auto;
+      height: 160px;
+      margin: 5px 0;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px 0;
+    }
+	
+	.intro-text {
+	  font-size: 16px;
+      color: #ccc;
+      margin: 5px 0 10px 0;
+      text-align: center;
+	  font-weight: bold;
+    }
+
+    h1 {
+      color: yellow;
+      font-size: 32px;
+      margin: 15px 0 10px 0;
+      font-weight: bold;
+    }
+
+    h2 {
+      color: white;
+      font-size: 24px;
+      margin: 0 0 15px 0;
+      text-decoration: underline;
+    }
+
+    p {
+      color: #ddd;
+      font-size: 18px;
+      max-width: 95%;
+      margin: 10px;
+    }
+
+    #slideshow {
+      width: 65%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      margin: 15px 0;
+    }
+
+    button {
+      margin: 15px 0;
+      font-size: 20px;
+      color: cyan;
+      font-weight: bold;
+      border: 2px solid cyan;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: cyan;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GIF sopra il contenuto -->
+  <div class="gif-row">
+    <img class="gif" src="img/sinistra1.gif" alt="Gif 1">
+    <img class="gif" src="img/sinistra2.gif" alt="Gif 2">
+  </div>
+
+  <!-- Testo piccolo introduttivo -->
+  <p class="intro-text">> Clicca sulle GIF per più regali! <</p>
+
+  <!-- Contenuto centrale -->
+  <div class="content">
+    <h1>COMPLIMENTI!!! HAI VINTOOOOO!!!1!</h1>
+    <h2>Sei stato scelto per ricevere un meraviglioso regalo!!!</h2>
+    <p>Un LANCIAGRANATE M23-A1 CON 6 GRANATE FLSH IN OMAGGIO! WOW!!!</p>
+    <img id="slideshow" src="img/1.jpg" alt="Slideshow">
+    
+    <button id="youtubeBtn">>>> CLICCA QUI (per riceverlo in game GRATIS!!) <<<</button>
+  </div>
+
+  <!-- GIF sotto il contenuto -->
+  <div class="gif-row">
+    <img class="gif" src="img/destra1.gif" alt="Gif 3">
+    <img class="gif" src="img/destra2.gif" alt="Gif 4">
+  </div>
+
+  <!-- AUDIO DI SOTTOFONDO -->
+  <audio id="bg-music" autoplay loop muted hidden>
+    <source src="audio/audio.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Bottone YouTube: apre nuova scheda e prova a chiudere pagina corrente
+    document.getElementById("youtubeBtn").addEventListener("click", function() {
+      window.open('https://www.youtube.com/shorts/81tfwxgnNCY', '_blank');
+      window.close(); // funziona solo se la pagina è stata aperta via JS
+    });
+
+    // Slideshow immagini
+    const immagini = ["img/1.jpg","img/2.jpg","img/3.jpg","img/4.jpg","img/5.jpg","img/6.jpg"];
+    let indice = 0;
+    function cambiaImmagine() {
+      indice = (indice + 1) % immagini.length;
+      document.getElementById("slideshow").src = immagini[indice];
+    }
+    setInterval(cambiaImmagine, 500);
+
+    // Autoplay musica su tutti i browser
+    window.addEventListener("load", function() {
+      const audio = document.getElementById("bg-music");
+      audio.volume = 0.3;
+      audio.muted = false; // sblocca audio
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // se bloccato, parte al primo touch/click
+          document.addEventListener("touchstart", () => audio.play(), { once: true });
+          document.addEventListener("click", () => audio.play(), { once: true });
+        });
+      }
+    });
+
+    // Apri la pagina stessa come popup se non è stata aperta via JS
+    if (!window.opener) {
+      const url = window.location.href;
+      const popup = window.open(url, '_blank', 'width=400,height=700');
+      if (popup) window.close(); // chiude la finestra originale
+    }
+  </script>
+
+</body>
+</html>
